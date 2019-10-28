@@ -10,7 +10,7 @@ app.use(
   })
 );
 
-app.use(AppRouter.getInstance());
+app.use(AppRouter.getInstance()); // using singleton router
 
 app.listen(3000, () => {
   console.log("Server is listening on port 3000");

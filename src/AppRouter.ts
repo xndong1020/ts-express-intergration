@@ -1,8 +1,8 @@
 import { Router } from "express";
 
-// singleton express router class
+// singleton
 export default class AppRouter {
-  static instance: Router = Router();
+  private static instance: Router;
 
   static getInstance(): Router {
     if (!AppRouter.instance) AppRouter.instance = Router();
