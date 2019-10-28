@@ -7,5 +7,6 @@ export enum Methods {
 
 export enum MetadataKeys {
   method = "method",
-  path = "path"
+  path = "path",
+  use = "use"
 }

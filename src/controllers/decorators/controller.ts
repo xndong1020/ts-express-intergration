@@ -19,10 +19,12 @@ export function controller(routePrefix: string) {
         target.prototype,
         key
       );
+      const middlewares =
+        Reflect.getMetadata(MetadataKeys.use, target.prototype, key) || [];
       if (path) {
         const router = AppRouter.getInstance();
         const fullPath = `${routePrefix}${path}`;
-        router[method](fullPath, routeHandler);
+        router[method](fullPath, ...middlewares, routeHandler);
       }
     }
   };
