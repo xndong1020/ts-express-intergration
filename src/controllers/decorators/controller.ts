@@ -22,7 +22,7 @@ export function controller(routePrefix: string) {
       if (path) {
         const router = AppRouter.getInstance();
         const fullPath = `${routePrefix}${path}`;
-        router.get(fullPath, routeHandler);
+        router[method](fullPath, routeHandler);
       }
     }
   };
