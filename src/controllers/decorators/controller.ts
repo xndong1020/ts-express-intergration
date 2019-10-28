@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import AppRouter from "../../AppRouter";
 import { Methods, MetadataKeys } from "../../constants/enum";
+import { bodyValidator } from "../../middlewares";
 
 // 'controller' decorator will be used to decorate class,
 // the 'target' refers to the constructor of the class
@@ -21,10 +22,22 @@ export function controller(routePrefix: string) {
       );
       const middlewares =
         Reflect.getMetadata(MetadataKeys.use, target.prototype, key) || [];
+
+      const requiredBodyProps =
+        Reflect.getMetadata(MetadataKeys.validator, target.prototype, key) ||
+        [];
+
+      const validatorMiddleware = bodyValidator(requiredBodyProps);
+
       if (path) {
         const router = AppRouter.getInstance();
         const fullPath = `${routePrefix}${path}`;
-        router[method](fullPath, ...middlewares, routeHandler);
+        router[method](
+          fullPath,
+          ...middlewares,
+          validatorMiddleware,
+          routeHandler
+        );
       }
     }
   };

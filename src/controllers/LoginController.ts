@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
-import { get } from "./decorators/routes";
-import { controller } from "./decorators/controller";
+import { get, post, controller, bodyValidator } from "./decorators";
 import { logger, logger2 } from "../middlewares";
 import { use } from "./decorators/use";
 
@@ -24,6 +23,13 @@ export class LoginController {
       </form>
     `);
   }
-}
 
-new LoginController();
+  @post("/login")
+  @bodyValidator("email", "password")
+  postLogin(req: Request, res: Response): void {
+    const { email, password } = req.body;
+    res.send(
+      `successfully post form, email is ${email}, password is ${password}`
+    );
+  }
+}
